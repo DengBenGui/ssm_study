@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd
+                            http://www.springframework.org/schema/aop
+                            https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 1. AOP xml配置实现 -->
+    <bean id="myAdvice" class="com.abc.cwb.aop.MyAdvice"></bean>
+    <bean id="myAdvice2" class="com.abc.cwb.aop.MyAdviceOrder2"></bean>
+    <aop:config expose-proxy="true">
+        <aop:aspect id="aspect" ref="myAdvice" order="1" >
+            <aop:pointcut id="myPoint" expression="execution(* com.abc.cwb.service.impl.*.*(..))"/>
+            <aop:before method="before" pointcut-ref="myPoint" />
+            <aop:after method="after" pointcut="execution(* com.abc.cwb.service.impl.*.add*(..))" />
+            <!--<aop:around method="around" pointcut-ref="myPoint"/>-->
+        </aop:aspect>
+        <aop:aspect id="aspect2" ref="myAdvice2" order="2">
+            <aop:pointcut id="myPoint" expression="execution(* com.abc.cwb.service.impl.*.*(..))"/>
+            <aop:before method="before" pointcut-ref="myPoint" />
+            <aop:after method="after" pointcut="execution(* com.abc.cwb.service.impl.*.add*(..))" />
+            <!--<aop:around method="around" pointcut-ref="myPoint"/>-->
+        </aop:aspect>
+    </aop:config>
+
+
+    <!-- 2.AOP 注解配置 -->
+    <!--<aop:aspectj-autoproxy proxy-target-class="false" expose-proxy="true"/>-->
+
+</beans>

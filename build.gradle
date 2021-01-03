@@ -1,0 +1,75 @@
+apply plugin: 'java'
+apply plugin: 'war'
+
+group 'com.abc.cwb'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+def spring_version = '5.2.10.RELEASE'
+
+dependencies {
+    testImplementation 'junit:junit:4.11'
+    compile 'log4j:log4j:1.2.17'
+    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile 'org.slf4j:slf4j-simple:1.7.25'
+    compile 'net.logstash.log4j:jsonevent-layout:1.7'
+    compile 'org.apache.tomcat:tomcat-servlet-api:8.0.24'
+    compile 'jstl:jstl:1.2'
+    compile 'org.aspectj:aspectjweaver:1.8.6'
+    compile 'com.alibaba:druid:1.1.21'
+
+    compile "com.fasterxml.jackson.core:jackson-annotations:2.11.2"
+    compile "com.fasterxml.jackson.core:jackson-databind:2.11.2"
+    compile "com.fasterxml.jackson.core:jackson-core:2.11.2"
+    compile "org.codehaus.jackson:jackson-mapper-asl:1.9.13"
+    compile "com.alibaba:fastjson:1.2.73"
+
+    providedCompile 'javax.servlet:servlet-api:2.5'
+
+    compile "org.springframework:spring-context:${spring_version}"
+    compile "org.springframework:spring-core:${spring_version}"
+    compile "org.springframework:spring-beans:${spring_version}"
+    compile "org.springframework:spring-web:${spring_version}"
+    compile "org.springframework:spring-webmvc:${spring_version}"
+    compile "org.springframework:spring-aop:${spring_version}"
+    compile "org.springframework:spring-tx:${spring_version}"
+    compile "org.springframework:spring-oxm:${spring_version}"
+    compile "org.springframework:spring-jdbc:${spring_version}"
+    compile "org.springframework:spring-aop:${spring_version}"
+    compile "org.springframework:spring-context-support:${spring_version}"
+    compile "org.springframework:spring-test:${spring_version}"
+
+//    compile "org.springframework:spring-boot:2.3.5.RELEASE"
+//    compile "org.springframework:spring-security-core:5.3.3.RELEASE"
+//    compile "org.springframework:spring-security-web:5.3.3.RELEASE"
+
+    compile 'org.mybatis:mybatis:3.5.5'
+    compile 'org.mybatis:mybatis-spring:2.0.5'
+    compile 'mysql:mysql-connector-java:8.0.19'
+    compile 'tk.mybatis:mapper:4.1.5'
+    compile 'com.alibaba:druid:1.1.21'
+    providedCompile 'org.projectlombok:lombok:1.18.12'
+
+}
+
+war {
+    archiveName = "wmas-2021.war"
+}
+
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.6.1'
+    }
+}
+

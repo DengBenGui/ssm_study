@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.abc.cwb.dao.UserPojoMapper">
+  <resultMap id="BaseResultMap" type="com.abc.cwb.pojo.UserPojo">
+    <id column="userId" jdbcType="INTEGER" property="userId" />
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+    <result column="passWord" jdbcType="VARCHAR" property="passWord" />
+    <result column="userTel" jdbcType="CHAR" property="userTel" />
+    <result column="delFlag" jdbcType="INTEGER" property="delFlag" />
+    <result column="createTime" jdbcType="CHAR" property="createTime" />
+    <result column="updateTime" jdbcType="CHAR" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    userId, userName, passWord, userTel, delFlag, createTime, updateTime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where userId = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where userId = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.abc.cwb.pojo.UserPojo">
+    insert into user (userId, userName, passWord, 
+      userTel, delFlag, createTime, 
+      updateTime)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}, 
+      #{userTel,jdbcType=CHAR}, #{delFlag,jdbcType=INTEGER}, #{createTime,jdbcType=CHAR}, 
+      #{updateTime,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.abc.cwb.pojo.UserPojo">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        userId,
+      </if>
+      <if test="userName != null">
+        userName,
+      </if>
+      <if test="passWord != null">
+        passWord,
+      </if>
+      <if test="userTel != null">
+        userTel,
+      </if>
+      <if test="delFlag != null">
+        delFlag,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="updateTime != null">
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="passWord != null">
+        #{passWord,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null">
+        #{userTel,jdbcType=CHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.abc.cwb.pojo.UserPojo">
+    update user
+    <set>
+      <if test="userName != null">
+        userName = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="passWord != null">
+        passWord = #{passWord,jdbcType=VARCHAR},
+      </if>
+      <if test="userTel != null">
+        userTel = #{userTel,jdbcType=CHAR},
+      </if>
+      <if test="delFlag != null">
+        delFlag = #{delFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null">
+        updateTime = #{updateTime,jdbcType=CHAR},
+      </if>
+    </set>
+    where userId = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.abc.cwb.pojo.UserPojo">
+    update user
+    set userName = #{userName,jdbcType=VARCHAR},
+      passWord = #{passWord,jdbcType=VARCHAR},
+      userTel = #{userTel,jdbcType=CHAR},
+      delFlag = #{delFlag,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=CHAR},
+      updateTime = #{updateTime,jdbcType=CHAR}
+    where userId = #{userId,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 注册	检查用户名是否存在 -->
+  <select id="selUserName" parameterType="java.lang.String" resultType="int">
+  	select count(*) from user where userName = #{userName,jdbcType=VARCHAR}
+  </select>
+  <!-- 注册	检查号码是否存在 -->
+  <select id="selUserTel" parameterType="java.lang.String" resultType="int">
+  	select count(*) from user where userTel = #{userTel,jdbcType=CHAR}
+  </select>
+  <!-- 注册 -->
+  <insert id="register" parameterType="com.abc.cwb.pojo.UserPojo">
+    insert into user (userId, userName, passWord, 
+      userTel, delFlag, createTime, 
+      updateTime)
+    values (default, #{userName,jdbcType=VARCHAR}, #{passWord,jdbcType=VARCHAR}, 
+      #{userTel,jdbcType=CHAR},0, #{createTime,jdbcType=CHAR}, 
+      #{createTime,jdbcType=CHAR})
+  </insert>
+  
+   <!-- 登录	检查 -->
+  <select id="checkLogin" resultType="java.lang.String">
+  	select userName from user where 
+  	(userName = #{userKey} and passWord = #{pwd})
+  	or (userTel = #{userKey} and passWord = #{pwd})
+  </select>
+  
+  <!-- 插入图纸，获取用户id -->
+  <select id="getIdByUserName" parameterType="java.lang.String" resultType="int">
+  	select userId from user where userName = #{userName,jdbcType=VARCHAR} 
+  </select>
+  
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
