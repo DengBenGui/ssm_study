@@ -1,0 +1,80 @@
+@startuml
+
+interface BeanFactory{
+    Object getBean(String name)
+    boolean isSingleton(String name)
+    boolean isPrototype(String name)
+}
+interface HierarchicalBeanFactory
+interface AutowireCapableBeanFactory{
+    <T> T createBean(Class<T> beanClass)
+    Object initializeBean(Object existingBean, String beanName)
+    Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName)
+    Object applyBeanPostProcessorsAfterInitialization(Object existingBean, String beanName)
+}
+interface ListableBeanFactory{
+    boolean containsBeanDefinition(String beanName)
+    String[] getBeanDefinitionNames()
+}
+BeanFactory <|-- HierarchicalBeanFactory
+BeanFactory <|-- AutowireCapableBeanFactory
+BeanFactory <|-- ListableBeanFactory
+
+
+interface ConfigurableBeanFactory
+interface ApplicationEventPublisher
+interface ApplicationContext
+
+HierarchicalBeanFactory <|-- ConfigurableBeanFactory
+HierarchicalBeanFactory <|-- ApplicationContext
+AutowireCapableBeanFactory <|-- ConfigurableListableBeanFactory
+AutowireCapableBeanFactory <|.. AbstractAutowireCapableBeanFactory
+ListableBeanFactory <|-- ApplicationContext
+ListableBeanFactory <|-- ConfigurableListableBeanFactory
+
+
+interface AliasRegistry
+interface SingletonBeanRegistry
+interface BeanDefinitionRegistry
+class SimpleAliasRegistry
+class DefaultSingletonBeanRegistry
+interface ResourceLoader
+interface ResourcePatternResolver
+class DefaultListableBeanFactory
+interface ConfigurableListableBeanFactory
+abstract class AbstractBeanFactory
+interface ConfigurableApplicationContext
+interface Lifecycle
+abstract class FactoryBeanRegistrySupport
+
+
+ConfigurableBeanFactory <|-- ConfigurableListableBeanFactory
+ConfigurableBeanFactory <|-- AbstractBeanFactory
+ConfigurableListableBeanFactory <|.. DefaultListableBeanFactory
+ApplicationContext <|-- ConfigurableApplicationContext
+
+ResourceLoader <|-- ResourcePatternResolver
+SingletonBeanRegistry <|-- ConfigurableBeanFactory
+ApplicationEventPublisher <|-- ApplicationContext
+ResourcePatternResolver <|-- ApplicationContext
+
+AbstractAutowireCapableBeanFactory <|-- DefaultListableBeanFactory
+BeanDefinitionRegistry <|.. DefaultListableBeanFactory
+
+abstract class AbstractAutowireCapableBeanFactory
+AbstractBeanFactory <|-- AbstractAutowireCapableBeanFactory
+
+FactoryBeanRegistrySupport <|-- AbstractBeanFactory
+
+Lifecycle <|-- ConfigurableApplicationContext
+
+DefaultSingletonBeanRegistry <|-- FactoryBeanRegistrySupport
+
+AliasRegistry <|.. SimpleAliasRegistry
+SimpleAliasRegistry <|-- DefaultSingletonBeanRegistry
+SingletonBeanRegistry <|.. DefaultSingletonBeanRegistry
+AliasRegistry <|-- BeanDefinitionRegistry
+
+
+
+@enduml
