@@ -9,6 +9,6 @@ public class TestService {
         System.out.println("----ClassFilter 不能AOP增强  print1----");
     }
     public void addPrint1(){
-        System.out.println("----ClassFilter 不能AOP增强  addPrint1----");
+        System.out.println("----MethodFilter 不能AOP增强  addPrint1----");
     }
 }

@@ -20,14 +20,13 @@
     <bean id="myAdvice" class="com.abc.cwb.aop.MyAdvice"></bean>
     <bean id="myAdvice2" class="com.abc.cwb.aop.MyAdviceOrder2"></bean>
     <aop:config expose-proxy="true">
+        <aop:pointcut id="myPoint" expression="execution(* com.abc.cwb.service.impl.*.*(..))"/>
         <aop:aspect id="aspect" ref="myAdvice" order="1" >
-            <aop:pointcut id="myPoint" expression="execution(* com.abc.cwb.service.impl.*.*(..))"/>
             <aop:before method="before" pointcut-ref="myPoint" />
             <aop:after method="after" pointcut="execution(* com.abc.cwb.service.impl.*.add*(..))" />
-            <!--<aop:around method="around" pointcut-ref="myPoint"/>-->
+            <aop:around method="around" pointcut-ref="myPoint"/>
         </aop:aspect>
         <aop:aspect id="aspect2" ref="myAdvice2" order="2">
-            <aop:pointcut id="myPoint" expression="execution(* com.abc.cwb.service.impl.*.*(..))"/>
             <aop:before method="before" pointcut-ref="myPoint" />
             <aop:after method="after" pointcut="execution(* com.abc.cwb.service.impl.*.add*(..))" />
             <!--<aop:around method="around" pointcut-ref="myPoint"/>-->

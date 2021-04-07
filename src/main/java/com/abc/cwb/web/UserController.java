@@ -1,5 +1,6 @@
 package com.abc.cwb.web;
 
+import com.abc.cwb.observer.PublishService;
 import com.abc.cwb.pojo.BaseResponse;
 import com.abc.cwb.pojo.UserPojo;
 import com.abc.cwb.service.UserService;
@@ -20,11 +21,14 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private PublishService publishService;
 
 
     @RequestMapping("/test01")
-    public String test01(){
+    public String test01(HttpServletRequest request){
         userService.addOneUserById(1);
+        publishService.visitLog(request.getRequestURI());
         return "success";
     }
 
